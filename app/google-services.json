@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "505051276034",
+    "firebase_url": "https://starry-acre-243615.firebaseio.com",
+    "project_id": "starry-acre-243615",
+    "storage_bucket": "starry-acre-243615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505051276034:android:27c03a98accbf4714b981b",
+        "android_client_info": {
+          "package_name": "com.vrajdesai.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505051276034-q85ungtdhafr09i8d6inubjpq19chidl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc1uCIonUkrx2b-EsuanV5goBeDvMFp4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505051276034-q85ungtdhafr09i8d6inubjpq19chidl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
