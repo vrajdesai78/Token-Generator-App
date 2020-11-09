@@ -72,12 +72,17 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Users").
-                document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                document(user.getUid());
 
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                msg.setText(value.getString("Name")) ;
+                if (error!=null){
+                    Log.d("Error","Error:"+error.getMessage());
+                }
+                else {
+                    msg.setText(value.getString("Name"));
+                }
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
