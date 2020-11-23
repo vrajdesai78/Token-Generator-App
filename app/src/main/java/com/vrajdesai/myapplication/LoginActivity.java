@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         catch (ApiException e) {
             Toast.makeText(this, "Exception"+e, Toast.LENGTH_SHORT).show();
-            FirebaseGoogleAuth(null);
+//            FirebaseGoogleAuth(null);
 
         }
     }

@@ -10,10 +10,9 @@
         android:id="@+id/logout"
         android:layout_width="169dp"
         android:layout_height="69dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -34,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/msg"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.696" />
 
     <EditText
         android:id="@+id/nameId"
@@ -57,5 +56,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/nameId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nameId" />
+
+    <Button
+        android:id="@+id/home_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toEndOf="@+id/logout"
+        app:layout_constraintTop_toBottomOf="@+id/list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

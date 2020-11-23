@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private Button logout;
     private TextView msg;
     private EditText name;
-    private Button add;
+    private Button add, home;
     private ListView listview;
     private Uri imageUri;
 
@@ -69,6 +69,15 @@ public class MainActivity extends AppCompatActivity {
         name = findViewById(R.id.nameId);
         add = findViewById(R.id.addName);
         listview = findViewById(R.id.list);
+
+        home = findViewById(R.id.home_btn);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            }
+        });
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Users").
@@ -101,28 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ArrayList<String> List = new ArrayList<>();
-        final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.list_item, List);
-        listview.setAdapter(adapter);
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Languages");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List.clear();
-                for(DataSnapshot snapshot1: snapshot.getChildren()) {
-                    List.add(snapshot1.getValue().toString());
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 //        Map<String, Object>city = new HashMap<>();
 //        city.put("City","Vadodara");
