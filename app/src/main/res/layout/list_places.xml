@@ -60,8 +60,8 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toTopOf="@+id/open_time"
-            app:layout_constraintEnd_toEndOf="@+id/place_name"
-            app:layout_constraintStart_toStartOf="@+id/place_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

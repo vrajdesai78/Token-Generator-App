@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Logged Out!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, StartActivity.class));
             }
-    });
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,9 +210,9 @@ public class MainActivity extends AppCompatActivity {
                     fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                             String url = uri.toString();
-                             Log.d("DownloadUrl", url);
-                             pd.dismiss();
+                            String url = uri.toString();
+                            Log.d("DownloadUrl", url);
+                            pd.dismiss();
                             Toast.makeText(MainActivity.this, "Image Upload Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });

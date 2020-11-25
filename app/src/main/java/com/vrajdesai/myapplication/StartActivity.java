@@ -47,7 +47,7 @@ public class StartActivity extends AppCompatActivity {
 
         if(user != null)
         {
-            startActivity(new Intent(StartActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            startActivity(new Intent(StartActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
     }
 }

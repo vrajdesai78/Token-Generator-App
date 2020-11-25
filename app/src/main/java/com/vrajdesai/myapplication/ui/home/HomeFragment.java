@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.vrajdesai.myapplication.R;
 import com.vrajdesai.myapplication.ShowPlaces;
 
-
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
