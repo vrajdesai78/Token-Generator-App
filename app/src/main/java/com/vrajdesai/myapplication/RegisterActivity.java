@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         private String TAG = "LoginActivity";
         private FirebaseAuth mAuth;
         private FirebaseAuth auth;
-    private int RC_SIGN_IN = 1;
+        private int RC_SIGN_IN = 1;
         private TextView login_btn;
 
     @Override
@@ -132,12 +132,14 @@ public class RegisterActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(RegisterActivity.this, "Signin Clicked", Toast.LENGTH_SHORT).show();
                 signIn();
             }
         });
     }
 
     private void signIn() {
+        Toast.makeText(this, "Signin Clicked", Toast.LENGTH_SHORT).show();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
 

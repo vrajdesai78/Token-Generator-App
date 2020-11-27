@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.vrajdesai.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,10 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowPlaces"></activity>
-        <activity android:name=".ui.ShowPlaces"></activity>
-        <activity android:name=".ShowplacesActivity" />
-        <activity android:name=".ui.home.HealthActivity" />
+        <activity android:name=".ShowPlaces"/>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"

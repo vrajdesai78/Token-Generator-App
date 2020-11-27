@@ -1,5 +1,6 @@
 package com.vrajdesai.myapplication;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.vrajdesai.myapplication.ui.bookings.Bookings;
+import com.vrajdesai.myapplication.ui.bookings.BookingsViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -24,7 +29,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -42,13 +47,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_bookings)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        setNavigationViewListener();
+//        setNavigationViewListener();
     }
 
     @Override
@@ -64,23 +69,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.action_logout:
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(HomeActivity.this, "Logged Out!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(HomeActivity.this, StartActivity.class));
-                break;
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void setNavigationViewListener() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+//
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId())
+//        {
+//            case R.id.action_logout:
+//                FirebaseAuth.getInstance().signOut();
+//                Toast.makeText(HomeActivity.this, "Logged Out!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(HomeActivity.this, StartActivity.class));
+//                break;
+//
+//            case R.id.nav_bookings:
+//                Fragment fragment = new Bookings();
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                ft.replace(R.id.nav_bookings, fragment);
+//                ft.commit();
+//
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
+//
+//    private void setNavigationViewListener() {
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+//    }
 }

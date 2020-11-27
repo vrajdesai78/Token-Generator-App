@@ -67,6 +67,7 @@ public class ShowPlaces extends AppCompatActivity {
     FirebaseFirestore db;
     int myear, mmonth, mdate;
     boolean isBooked = false;
+    private String addr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +211,7 @@ public class ShowPlaces extends AppCompatActivity {
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String refid = getSnapshots().getSnapshot(position).getId();
+                        addr = getSnapshots().getSnapshot(position).getString("address");
                         dialog.show();
                         title.setText(getSnapshots().getSnapshot(position).getString("Name"));
                     }
@@ -255,6 +256,7 @@ public class ShowPlaces extends AppCompatActivity {
             addDetails.put("Place_name", title.getText().toString());
             addDetails.put("UserId", FirebaseAuth.getInstance().getCurrentUser().getUid());
             addDetails.put("Timing", myCalendar.getTime());
+            addDetails.put("address", addr);
 
             db.collection("BookingDetails").add(addDetails)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
