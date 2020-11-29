@@ -7,16 +7,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_bookings"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_baseline_calendar_today_24"
             android:title="Your Bookings" />
         <item
-            android:id="@+id/action_logout"
-            android:icon="@drawable/common_full_open_on_phone"
-            android:title="Log Out"
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="Info"
             app:showAsAction="always" />
+
     </group>
 </menu>

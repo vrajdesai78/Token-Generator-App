@@ -1,7 +1,7 @@
 package com.vrajdesai.myapplication;
 
 public class PlacesModel {
-    public PlacesModel(String name, String address, int open, int close) {
+    public PlacesModel(String name, String address, String open, String close) {
         Name = name;
         this.address = address;
         this.open = open;
@@ -30,23 +30,25 @@ public class PlacesModel {
 
     private String address;
 
-    public int getOpen() {
+    private String open;
+
+    public String getOpen() {
         return open;
     }
 
-    public void setOpen(int open) {
+    public void setOpen(String open) {
         this.open = open;
     }
 
-    private int open;
-    private int close;
-
-    public int getClose() {
+    public String getClose() {
         return close;
     }
 
-    public void setClose(int close) {
+    public void setClose(String close) {
         this.close = close;
     }
+
+    private String close;
+
 
 }

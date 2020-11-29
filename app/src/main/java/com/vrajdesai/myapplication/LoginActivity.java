@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,9 +63,15 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email_txt = email.getText().toString();
-                String password_txt = password.getText().toString();
-                loginUser(email_txt,password_txt);
+
+                if(TextUtils.isEmpty(email.getText().toString()) || TextUtils.isEmpty(password.getText().toString())) {
+                    Toast.makeText(LoginActivity.this, "Credentials Can't be Empty", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String email_txt = email.getText().toString();
+                    String password_txt = password.getText().toString();
+                    loginUser(email_txt, password_txt);
+                }
             }
         });
 
@@ -111,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
         catch (ApiException e) {
             Toast.makeText(this, "Exception"+e, Toast.LENGTH_SHORT).show();
 //            FirebaseGoogleAuth(null);
-
         }
     }
 

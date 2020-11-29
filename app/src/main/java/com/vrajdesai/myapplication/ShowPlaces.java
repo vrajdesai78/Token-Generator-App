@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -20,10 +23,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCanceledListener;
@@ -41,7 +49,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +60,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,6 +81,7 @@ public class ShowPlaces extends AppCompatActivity {
     boolean isBooked = false;
     private String addr;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +89,7 @@ public class ShowPlaces extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         placesList = findViewById(R.id.listPlaces);
+
 
         dialog = new Dialog(ShowPlaces.this);
 
@@ -203,17 +217,26 @@ public class ShowPlaces extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull PlacesViewHolder holder, final int position, @NonNull PlacesModel model) {
+            protected void onBindViewHolder(@NonNull final PlacesViewHolder holder, final int position, @NonNull PlacesModel model) {
                 holder.place_name.setText(model.getName());
                 holder.place_add.setText(model.getAddress());
-                holder.place_open.setText(model.getOpen() + "");
-                holder.place_close.setText(model.getClose() + "");
+                holder.place_open.setText("Timing: "+model.getOpen() + " To "+model.getClose());
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         addr = getSnapshots().getSnapshot(position).getString("address");
                         dialog.show();
                         title.setText(getSnapshots().getSnapshot(position).getString("Name"));
+                    }
+                });
+
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Places")
+                        .child(getSnapshots().getSnapshot(position).getId()+"."+"jpg");
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String imageUrl = uri.toString();
+                        Glide.with(getApplicationContext()).load(imageUrl).into(holder.placePhoto);
                     }
                 });
             }
@@ -236,15 +259,15 @@ public class ShowPlaces extends AppCompatActivity {
         private TextView place_add;
         private TextView place_name;
         private TextView place_open;
-        private TextView place_close;
+        private ImageView placePhoto;
         View mView;
 
         public PlacesViewHolder(@NonNull View itemView) {
             super(itemView);
             place_add = itemView.findViewById(R.id.place_address);
             place_name = itemView.findViewById(R.id.place_name);
-            place_open = itemView.findViewById(R.id.open_time);
-            place_close = itemView.findViewById(R.id.close_time);
+            place_open = itemView.findViewById(R.id.time);
+            placePhoto = itemView.findViewById(R.id.place_photo);
             mView = itemView;
         }
     }
@@ -266,6 +289,7 @@ public class ShowPlaces extends AppCompatActivity {
                             Toast.makeText(ShowPlaces.this,
                                     "Booked Successfully", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+//
                         }
                     });
         }
@@ -286,5 +310,10 @@ public class ShowPlaces extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
     }
+
+    @GlideModule
+    public class MyAppGlideModule extends AppGlideModule implements com.vrajdesai.myapplication.MyAppGlideModule {
+    }
+
 }
 
