@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_info"
-        android:name="com.vrajdesai.myapplication.ui.info"
+        android:name="com.vrajdesai.myapplication.ui.info.info"
         android:label="About Tokenizer"
         tools:layout="@layout/info_fragment" />
 

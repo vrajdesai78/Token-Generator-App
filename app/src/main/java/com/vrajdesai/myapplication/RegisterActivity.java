@@ -175,8 +175,19 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     Toast.makeText(RegisterActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
-                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                    finish();
+                    DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Users").
+                            document(auth.getInstance()
+                                    .getCurrentUser().getUid());
+                    Map<String, Object> user1 = new HashMap<>();
+                    user1.put("Name",auth.getCurrentUser().getDisplayName());
+                    user1.put("Email",auth.getCurrentUser().getEmail());
+                    documentReference.set(user1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                            finish();
+                        }
+                    });
                 }
                 else {
                     Toast.makeText(RegisterActivity.this, "Failed", Toast.LENGTH_SHORT).show();

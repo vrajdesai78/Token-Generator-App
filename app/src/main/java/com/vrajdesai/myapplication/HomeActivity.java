@@ -1,5 +1,6 @@
 package com.vrajdesai.myapplication;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,10 +14,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.vrajdesai.myapplication.ui.bookings.Bookings;
 import com.vrajdesai.myapplication.ui.bookings.BookingsViewModel;
 
@@ -57,8 +70,23 @@ public class HomeActivity extends AppCompatActivity {
         place_email = headerview.findViewById(R.id.email_nav);
         place_name = headerview.findViewById(R.id.name_nav);
 
+        FirebaseFirestore documentReference = FirebaseFirestore.getInstance();
+        documentReference.collection("Users").whereEqualTo("Email", FirebaseAuth
+                .getInstance().getCurrentUser().getEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        place_name.setText(documentSnapshot.getString("Name"));
+                    }
+                }
+            }
+        });
+
         place_email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        place_name.setText((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+//        place_name.setText((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.info.info">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="What is Tokenizer ?"
+            android:textColor="#000"
+            android:fontFamily="sans-serif-black"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#3C3B3B"
+            android:padding="5dp"
+            android:text="This app is created to decrease long queues at a certain extent by fixing an appointment at your convenience."
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/how"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="How To Use ?"
+            android:textColor="#000"
+            android:fontFamily="sans-serif-black"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="#3C3B3B"
+            android:text="1. Register or Login with a valid email id." />
+
+        <TextView
+            android:id="@+id/kjdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="#3C3B3B"
+            android:text="2. Select the place according to their respective category." />
+
+        <TextView
+            android:id="@+id/sdjkf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="#3C3B3B"
+            android:text="3. Provide proper Date and time." />
+
+        <TextView
+            android:id="@+id/sdjklf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="#3C3B3B"
+            android:text="4. Your appointment is successfully created." />
+
+        <TextView
+            android:id="@+id/sdlkfj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textColor="#3C3B3B"
+            android:text="5. You can see your appointment QR Code by clicking on bookings in 'Your Bookings' section." />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
