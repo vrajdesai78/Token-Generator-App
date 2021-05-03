@@ -41,7 +41,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="100dp"
         android:layout_marginLeft="100dp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:background="@drawable/button"
         android:text="@android:string/cancel"

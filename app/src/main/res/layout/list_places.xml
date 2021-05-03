@@ -2,28 +2,29 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
     app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/card_bg"
         android:padding="20dp">
 
         <ImageView
             android:id="@+id/place_photo"
             android:layout_width="104dp"
             android:layout_height="87dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/qr_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/qr_back"
             app:layout_goneMarginRight="5dp"
             tools:srcCompat="@android:mipmap/sym_def_app_icon" />
 
@@ -31,12 +32,12 @@
             android:id="@+id/place_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginLeft="130dp"
-            android:gravity="center"
-            android:textSize="20dp"
             android:fontFamily="sans-serif-black"
-            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/place_photo"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,30 +50,32 @@
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:text="TextView"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/place_photo"
             app:layout_constraintTop_toBottomOf="@+id/place_name"
             app:layout_constraintVertical_bias="0.982" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/close_time"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="TextView"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/open_time"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/open_time"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/open_time" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/close_time"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="TextView"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/open_time"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/open_time"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/open_time" />-->
 
         <TextView
             android:id="@+id/place_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="TextView"
             android:layout_marginLeft="130dp"
-            android:textSize="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/place_photo"
             app:layout_constraintTop_toBottomOf="@+id/place_name" />

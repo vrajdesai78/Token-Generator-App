@@ -14,8 +14,10 @@ import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -35,6 +37,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -58,7 +65,7 @@ public class ShowPlaces extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView placesList;
     private FirestoreRecyclerAdapter adapter;
-    private TextView date, time;
+    private EditText date, time;
     private Dialog dialog;
     private Button confirm;
     private Button cancel;
@@ -69,11 +76,14 @@ public class ShowPlaces extends AppCompatActivity {
     boolean isBooked = false;
     private String addr, email;
     private boolean status = false;
+    MaterialTimePicker materialTimePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_places);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         placesList = findViewById(R.id.listPlaces);
@@ -93,7 +103,7 @@ public class ShowPlaces extends AppCompatActivity {
         dialog = new Dialog(ShowPlaces.this);
 
         dialog.setContentView(R.layout.booking_dialog);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_background));
         }
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -113,33 +123,62 @@ public class ShowPlaces extends AppCompatActivity {
             }
         });
 
+        MaterialDatePicker.Builder dBuilder = MaterialDatePicker.Builder.datePicker();
+        dBuilder.setTitleText("SELECT A DATE");
+        final MaterialDatePicker MDP = dBuilder.build();
+
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog.OnDateSetListener date1 = new DatePickerDialog.OnDateSetListener() {
 
+                MDP.show(getSupportFragmentManager(), "DATE_PICKER");
+
+//                MDP.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+//                    @Override
+//                    public void onPositiveButtonClick(Object selection) {
+//                        String sdate= MDP.getHeaderText();
+//                        date.setText(sdate);
+//                    }
+//                });
+
+                MDP.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        // TODO Auto-generated method stub
-
-                        myear = year;
-                        mmonth = monthOfYear;
-                        mdate = dayOfMonth;
-
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, monthOfYear);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateLabel();
+                    public void onPositiveButtonClick(Long selection) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String dateString = formatter.format(new Date(selection));
+                        myCalendar.setTimeInMillis(selection);
+                        date.setText(dateString);
                     }
-                };
+                });
 
-                new DatePickerDialog(ShowPlaces.this, date1, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show(); }
+//                DatePickerDialog.OnDateSetListener date1 = new DatePickerDialog.OnDateSetListener() {
+//
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                          int dayOfMonth) {
+//
+//                        myear = year;
+//                        mmonth = monthOfYear;
+//                        mdate = dayOfMonth;
+//
+//                        myCalendar.set(Calendar.YEAR, year);
+//                        myCalendar.set(Calendar.MONTH, monthOfYear);
+//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                        updateLabel();
+//                    }
+//                };
+//
+//                new DatePickerDialog(ShowPlaces.this, date1, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
         });
 
+//        MaterialTimePicker.Builder Tbuilder = new MaterialTimePicker.Builder();
+//        Tbuilder.setTitleText("SELECT TIME");
+//        final MaterialTimePicker mTimePicker = Tbuilder.build();
 
         time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,18 +186,36 @@ public class ShowPlaces extends AppCompatActivity {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(ShowPlaces.this, new TimePickerDialog.OnTimeSetListener() {
+//                mTimePicker.show(getSupportFragmentManager(), "TIME_PICKER");
+                materialTimePicker = new MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_12H)
+                        .setHour(hour)
+                        .setMinute(minute)
+                        .build();
+
+                materialTimePicker.show(getSupportFragmentManager(), "Time_Picker");
+                materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time.setText( selectedHour + ":" + selectedMinute);
-                        myCalendar.set(Calendar.HOUR, selectedHour);
-                        myCalendar.set(Calendar.MINUTE, selectedMinute);
+                    public void onClick(View v) {
+                        time.setText(materialTimePicker.getHour() + " : " + materialTimePicker.getMinute());
+                        myCalendar.set(Calendar.HOUR, materialTimePicker.getHour());
+                        myCalendar.set(Calendar.MINUTE, materialTimePicker.getMinute());
                         myCalendar.set(Calendar.SECOND, 0);
                     }
-                }, hour, minute, false);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+                });
+
+
+//                mTimePicker = new TimePickerDialog(ShowPlaces.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                        time.setText(selectedHour + ":" + selectedMinute);
+//                        myCalendar.set(Calendar.HOUR, selectedHour);
+//                        myCalendar.set(Calendar.MINUTE, selectedMinute);
+//                        myCalendar.set(Calendar.SECOND, 0);
+//                    }
+//                }, hour, minute, false);//Yes 24 hour time
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
             }
         });
 
@@ -170,20 +227,20 @@ public class ShowPlaces extends AppCompatActivity {
                 isBooked = false;
                 db = FirebaseFirestore.getInstance();
                 CollectionReference cref = db.collection("BookingDetails");
-                Query q1 = cref.whereEqualTo("Place_name",""+title.getText().toString());
+                Query q1 = cref.whereEqualTo("Place_name", "" + title.getText().toString());
                 q1.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for(DocumentSnapshot ds: queryDocumentSnapshots) {
+                        for (DocumentSnapshot ds : queryDocumentSnapshots) {
                             Date dt = ds.getTimestamp("Timing").toDate();
-                            System.out.println("Data From Firebase: "+dt);
-                            System.out.println("User Input"+myCalendar.getTime());
-                            if(dt.toString().compareTo(myCalendar.getTime().toString()) == 0) {
+                            System.out.println("Data From Firebase: " + dt);
+                            System.out.println("User Input" + myCalendar.getTime());
+                            if (dt.toString().compareTo(myCalendar.getTime().toString()) == 0) {
                                 isBooked = true;
                                 Toast.makeText(ShowPlaces.this, "Sorry already Booked", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        if(!isBooked) {
+                        if (!isBooked) {
                             addBookingDetails();
                         }
                     }
@@ -216,7 +273,7 @@ public class ShowPlaces extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull final PlacesViewHolder holder, final int position, @NonNull PlacesModel model) {
                 holder.place_name.setText(model.getName());
                 holder.place_add.setText(model.getAddress());
-                holder.place_open.setText("Timing: "+model.getOpen() + " To "+model.getClose());
+                holder.place_open.setText("Timing: " + model.getOpen() + " To " + model.getClose());
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -228,7 +285,7 @@ public class ShowPlaces extends AppCompatActivity {
                 });
 
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Places")
-                        .child(getSnapshots().getSnapshot(position).getId()+"."+"jpg");
+                        .child(getSnapshots().getSnapshot(position).getId() + "." + "jpg");
                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -270,13 +327,13 @@ public class ShowPlaces extends AppCompatActivity {
     }
 
     private void addBookingDetails() {
-        if(myCalendar.getTime().after(Calendar.getInstance().getTime())) {
+        if (myCalendar.getTime().after(Calendar.getInstance().getTime())) {
 
-            if(checkStatus()) {
+            if (checkStatus()) {
                 addReminderInCalendar(title.getText().toString(), title.getText().toString() + "\n" + addr);
             }
 
-            final Map<String,Object> addDetails = new HashMap<>();
+            final Map<String, Object> addDetails = new HashMap<>();
             addDetails.put("Place_name", title.getText().toString());
             addDetails.put("UserId", FirebaseAuth.getInstance().getCurrentUser().getUid());
             addDetails.put("Timing", myCalendar.getTime());
@@ -293,8 +350,7 @@ public class ShowPlaces extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-        }
-        else {
+        } else {
             Toast.makeText(ShowPlaces.this, "Sorry no booking available",
                     Toast.LENGTH_SHORT).show();
         }
@@ -346,7 +402,9 @@ public class ShowPlaces extends AppCompatActivity {
         cr.insert(REMINDERS_URI, values);
     }
 
-    /** Returns Calendar Base URI, supports both new and old OS. */
+    /**
+     * Returns Calendar Base URI, supports both new and old OS.
+     */
     private String getCalendarUriBase(boolean eventUri) {
 
         Uri calendarURI = null;
@@ -363,23 +421,19 @@ public class ShowPlaces extends AppCompatActivity {
         return calendarURI.toString();
     }
 
-    private boolean checkStatus()
-    {
+    private boolean checkStatus() {
         int result = getBaseContext().checkCallingOrSelfPermission(Manifest.permission.READ_CALENDAR);
         int result1 = getBaseContext().checkCallingOrSelfPermission(Manifest.permission.WRITE_CALENDAR);
-        if(result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED)
-        {
+        if (result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED) {
             status = true;
-        }
-        else {
+        } else {
             ActivityCompat.requestPermissions(ShowPlaces.this,
                     new String[]{Manifest.permission.READ_CALENDAR,
                             Manifest.permission.WRITE_CALENDAR},
                     1);
             result = getBaseContext().checkCallingOrSelfPermission(Manifest.permission.READ_CALENDAR);
             result1 = getBaseContext().checkCallingOrSelfPermission(Manifest.permission.WRITE_CALENDAR);
-            if(result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED)
-            {
+            if (result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED) {
                 status = true;
             }
         }
