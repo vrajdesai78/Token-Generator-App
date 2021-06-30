@@ -5,9 +5,9 @@ I have developed an online appointment booking system. To implement this online 
 
 To run this application in your local machine. First you need android studio with proper android sdk.
 
-To clone this repository: git clone https://github.com/vrajdesai78/Token-Generator-App.git
+To clone this repository: `git clone https://github.com/vrajdesai78/Token-Generator-App.git`
 
-Screenshots:
+### Screenshots:
 
 | Splash Screen | Login Screen | Home Screen | Places List |
 |      :---:    |     :---:    |       :---: |  :---:      |
