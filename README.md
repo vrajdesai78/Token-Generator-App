@@ -9,4 +9,4 @@ To clone this repository: git clone https://github.com/vrajdesai78/Token-Generat
 
 Screenshots:
 
-<img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="40" height="100">
+<img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="100" height="300">
