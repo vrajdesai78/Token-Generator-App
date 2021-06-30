@@ -9,6 +9,8 @@ To clone this repository: git clone https://github.com/vrajdesai78/Token-Generat
 
 Screenshots:
 
-<img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300">
-<img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300">
-<img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300">
+| Splash Screen | Home Screen | Scan QR Screen |
+| :---          |     :---:   |          ---:  |
+| <img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300"> | <img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300"> | <img src="https://github.com/vrajdesai78/Token-Generator-App/blob/master/Screenshots/splash_screen.png" width="180" height="300"> |
+
+
